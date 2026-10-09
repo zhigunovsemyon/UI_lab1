@@ -2,6 +2,10 @@
 
 public partial class FormMain : Form
 {
+	private const string _filename = "times.txt";
+	private readonly Random _rand = new();
+	private DateTime _oldTime;
+
 	private int S_count = -1;
 	private readonly int[] D = [7];
 
@@ -11,11 +15,7 @@ public partial class FormMain : Form
 	private int tries = 0;
 	private int mode = -1;
 	private int state = 0;
-
-	private readonly Random _rand = new();
-	private DateTime _oldTime;
-
-
+	
 	public FormMain () => this.InitializeComponent();
 
 	private void HandleMouseMove ()
@@ -53,7 +53,7 @@ public partial class FormMain : Form
 			this.button1.Location = p;
 			this.button1.Size = new Size((int)(1.5f * this.D[this.D_count]), this.D[this.D_count]);
 		} else {
-			var stream = File.Open("times.txt", FileMode.Append);
+			var stream = File.Open(_filename, FileMode.Append);
 			var writer = new StreamWriter(stream);			
 			writer.WriteLine($"{this.S[this.S_count]} {this.D[this.D_count]} {(DateTime.Now - _oldTime).TotalMilliseconds}");
 			writer.Flush();
@@ -95,7 +95,7 @@ public partial class FormMain : Form
 
 	private void Form1_Load (object sender, EventArgs e)
 	{
-		FileStream stream = File.Open("times.txt", FileMode.Create);
+		FileStream stream = File.Open(_filename, FileMode.Create);
 
 		stream.Close();
 
