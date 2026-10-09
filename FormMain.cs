@@ -49,8 +49,9 @@ public partial class FormMain : Form
 			this._oldTime = DateTime.Now;
 
 			double ang = RandomAngle(this._rand);
-			Point p = new(IntCeil(Math.Cos(ang) * this.S[this.S_count]), IntCeil(Math.Sin(ang) * this.S[this.S_count]));
-			this.button1.Location = p;
+			int x = IntCeil(Math.Cos(ang) * this.S[this.S_count]);
+			int y = IntCeil(Math.Sin(ang) * this.S[this.S_count]);
+			this.button1.Location = new Point (x,y);
 			this.button1.Size = new Size((int)(1.5f * this.D[this.D_count]), this.D[this.D_count]);
 		} else {
 			var stream = File.Open(_filename, FileMode.Append);
@@ -88,7 +89,10 @@ public partial class FormMain : Form
 			this.state = 1;
 
 			double ang = RandomAngle(this._rand);
-			this.button1.Location = new Point(IntCeil(Math.Cos(ang) * this.S[this.S_count]), IntCeil(Math.Sin(ang) * this.S[this.S_count]));
+			int x = IntCeil(Math.Cos(ang) * this.S[this.S_count]);
+			int y = IntCeil(Math.Sin(ang) * this.S[this.S_count]);
+			this.button1.Location = new Point(x, y);
+
 			this.button1.Size = new Size((int)(1.5f * this.D[this.D_count]), this.D[this.D_count]);
 		}
 	}
@@ -119,8 +123,11 @@ public partial class FormMain : Form
 			this._oldTime = DateTime.Now;
 		}
 		this.state = 1;
+
 		double ang = RandomAngle(this._rand);
-		this.button1.Location = new Point(IntCeil(Math.Cos(ang) * this.S[this.S_count]), IntCeil(Math.Sin(ang) * this.S[this.S_count]));
+		int x = IntCeil(Math.Cos(ang) * this.S[this.S_count]);
+		int y = IntCeil(Math.Sin(ang) * this.S[this.S_count]);
+		this.button1.Location = new Point(x,y);
 
 		this.button1.Size = new Size((int)(1.5f * this.D[this.D_count]), this.D[this.D_count]);
 	}
