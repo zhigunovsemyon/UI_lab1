@@ -49,12 +49,12 @@ public partial class FormMain : Form
 			this._oldTime = DateTime.Now;
 
 			double ang = RandomAngle(this._rand);
-			Point p = new((int)Math.Ceiling(Math.Cos(ang) * this.S[this.S_count]), (int)Math.Ceiling(Math.Sin(ang) * this.S[this.S_count]));
+			Point p = new(IntCeil(Math.Cos(ang) * this.S[this.S_count]), IntCeil(Math.Sin(ang) * this.S[this.S_count]));
 			this.button1.Location = p;
 			this.button1.Size = new Size((int)(1.5f * this.D[this.D_count]), this.D[this.D_count]);
 		} else {
 			var stream = File.Open(_filename, FileMode.Append);
-			var writer = new StreamWriter(stream);			
+			var writer = new StreamWriter(stream);
 			writer.WriteLine($"{this.S[this.S_count]} {this.D[this.D_count]} {(DateTime.Now - _oldTime).TotalMilliseconds}");
 			writer.Flush();
 			writer.Close();
@@ -93,7 +93,7 @@ public partial class FormMain : Form
 		}
 	}
 
-	private void Form1_Load (object sender, EventArgs e)
+	private void FormMail_Load (object sender, EventArgs e)
 	{
 		FileStream stream = File.Open(_filename, FileMode.Create);
 
@@ -103,7 +103,7 @@ public partial class FormMain : Form
 		this.button1.BackColor = Color.Gray;
 	}
 
-	private void Form1_MouseClick (object sender, MouseEventArgs e)
+	private void FormMain_MouseClick (object sender, MouseEventArgs e)
 	{
 		if (this.state != 2) {
 			return;

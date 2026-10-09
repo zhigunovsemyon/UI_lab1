@@ -62,8 +62,8 @@ partial class FormMain
 		this.Margin = new Padding(2);
 		this.Name = "FormMain";
 		this.Text = "Form1";
-		this.Load += this.Form1_Load;
-		this.MouseClick += this.Form1_MouseClick;
+		this.Load += this.FormMail_Load;
+		this.MouseClick += this.FormMain_MouseClick;
 		this.MouseMove += this.FormMain_MouseMove;
 		this.ResumeLayout(false);
 		this.PerformLayout();
