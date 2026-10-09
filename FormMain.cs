@@ -48,7 +48,7 @@ public partial class FormMain : Form
 			this.S_count++;
 			this._oldTime = DateTime.Now;
 
-			double ang = (this._rand.NextDouble() / 2 * Math.PI);
+			double ang = RandomAngle(this._rand);
 			Point p = new((int)Math.Ceiling(Math.Cos(ang) * this.S[this.S_count]), (int)Math.Ceiling(Math.Sin(ang) * this.S[this.S_count]));
 			this.button1.Location = p;
 			this.button1.Size = new Size((int)(1.5f * this.D[this.D_count]), this.D[this.D_count]);
@@ -86,9 +86,9 @@ public partial class FormMain : Form
 			}
 
 			this.state = 1;
-			double ang = (this._rand.NextDouble() / 2 * Math.PI);
-			
-			this.button1.Location = new Point((int)Math.Ceiling(Math.Cos(ang) * this.S[this.S_count]), (int)Math.Ceiling(Math.Sin(ang) * this.S[this.S_count]));
+
+			double ang = RandomAngle(this._rand);
+			this.button1.Location = new Point(IntCeil(Math.Cos(ang) * this.S[this.S_count]), IntCeil(Math.Sin(ang) * this.S[this.S_count]));
 			this.button1.Size = new Size((int)(1.5f * this.D[this.D_count]), this.D[this.D_count]);
 		}
 	}
@@ -119,11 +119,15 @@ public partial class FormMain : Form
 			this._oldTime = DateTime.Now;
 		}
 		this.state = 1;
-		double ang = (this._rand.NextDouble() / 2 * Math.PI);
-		this.button1.Location = new Point((int)Math.Ceiling(Math.Cos(ang) * this.S[this.S_count]), (int)Math.Ceiling(Math.Sin(ang) * this.S[this.S_count]));
+		double ang = RandomAngle(this._rand);
+		this.button1.Location = new Point(IntCeil(Math.Cos(ang) * this.S[this.S_count]), IntCeil(Math.Sin(ang) * this.S[this.S_count]));
 
 		this.button1.Size = new Size((int)(1.5f * this.D[this.D_count]), this.D[this.D_count]);
 	}
 
 	private void FormMain_MouseMove (object sender, MouseEventArgs e) => this.HandleMouseMove();
+
+	private static int IntCeil(double x) => (int)Math.Ceiling(x);
+
+	private static double RandomAngle(Random rnd) => (rnd.NextDouble() / 2 * Math.PI);
 }
