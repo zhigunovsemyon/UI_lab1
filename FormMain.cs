@@ -38,7 +38,7 @@ public partial class FormMain : Form
 	{
 		this.mode = 0;
 		this.state = 0;
-		Cursor.Position = this.Bounds.Location;
+		Cursor.Position = this.ScreenCentre;
 		this.button1.Hide();
 
 		Thread.Sleep(1000);
@@ -66,7 +66,7 @@ public partial class FormMain : Form
 		stream.Close();
 
 		this.tries++;
-		Cursor.Position = this.Bounds.Location;
+		Cursor.Position = this.ScreenCentre;
 
 		if (this.tries == 5) {
 			this.S_index++;
@@ -126,7 +126,7 @@ public partial class FormMain : Form
 		}
 
 		this.state = 0;
-		Cursor.Position = this.Bounds.Location;
+		Cursor.Position = this.ScreenCentre;
 		this.button1.Hide();
 		Thread.Sleep(1000);
 
@@ -142,6 +142,16 @@ public partial class FormMain : Form
 		this.button1.Location = new Point(x,y);
 
 		this.button1.Size = new Size((int)(1.5f * this.D[this.D_index]), this.D[this.D_index]);
+	}
+
+	private Point ScreenCentre
+	{
+		get
+		{
+			var x = this.Bounds.X + this.Bounds.Width / 2;
+			var y = this.Bounds.Y + this.Bounds.Height / 2;
+			return new Point(x, y);
+		}
 	}
 
 	private void FormMain_MouseMove (object sender, MouseEventArgs e) => this.HandleMouseMove();
