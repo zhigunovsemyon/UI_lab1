@@ -3,6 +3,8 @@
 public partial class FormMain : Form
 {
 	private const string _filename = "times.txt";
+	private const double _angleRange = Math.PI / 2;
+
 	private readonly Random _rand = new();
 	private DateTime _oldTime;
 
@@ -158,5 +160,5 @@ public partial class FormMain : Form
 
 	private static int IntCeil(double x) => (int)Math.Ceiling(x);
 
-	private static double RandomAngle(Random rnd) => (rnd.NextDouble() / 2 * Math.PI);
+	private static double RandomAngle(Random rnd) => (rnd.NextDouble() * _angleRange);
 }
