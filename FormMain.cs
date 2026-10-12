@@ -4,6 +4,7 @@ public partial class FormMain : Form
 {
 	private const string _filename = "times.txt";
 	private const double _angleRange = Math.PI / 2;
+	private const int _widthMult = 3;
 
 	private readonly Random _rand = new();
 	private DateTime _oldTime;
@@ -11,10 +12,16 @@ public partial class FormMain : Form
 	//Размеры кнопок
 	private readonly int[] D = [7];
 	private int D_index = 0;
+	private int CurrentButtonHeight => this.D[this.D_index];
+	private int CurrentButtonWidth => this.CurrentButtonHeight * _widthMult;
+
+	private Size CurrentButtonSize => new(this.CurrentButtonWidth, this.CurrentButtonHeight);
+
 
 	//Дистанции до кнопки
 	private readonly int[] S = [0, 20, 40, 60, 100, 150, 200, 250, 300, 350];
 	private int S_index = -1;
+	private int CurrentLength => this.S[this.S_index];
 
 	private int tries = 0;
 	private int mode = -1;
@@ -52,17 +59,17 @@ public partial class FormMain : Form
 		this._oldTime = DateTime.Now;
 
 		double ang = RandomAngle(this._rand);
-		int x = IntCeil(Math.Cos(ang) * this.S[this.S_index]);
-		int y = IntCeil(Math.Sin(ang) * this.S[this.S_index]);
+		int x = IntCeil(Math.Cos(ang) * this.CurrentLength);
+		int y = IntCeil(Math.Sin(ang) * this.CurrentLength);
 		this.button1.Location = new Point (x,y);
-		this.button1.Size = new Size((int)(1.5f * this.D[this.D_index]), this.D[this.D_index]);
+		this.button1.Size = this.CurrentButtonSize;
 	}
 
 	private void HandleNotFirstClick()
 	{
 		var stream = File.Open(_filename, FileMode.Append);
 		var writer = new StreamWriter(stream);
-		writer.WriteLine($"{this.S[this.S_index]} {this.D[this.D_index]} {(DateTime.Now - _oldTime).TotalMilliseconds}");
+		writer.WriteLine($"{this.CurrentLength} {this.CurrentButtonHeight} {(DateTime.Now - _oldTime).TotalMilliseconds}");
 		writer.Flush();
 		writer.Close();
 		stream.Close();
@@ -88,18 +95,18 @@ public partial class FormMain : Form
 		Thread.Sleep(1000);
 		
 		this.button1.Show();
-		if (this.S[this.S_index] == 0) {
+		if (this.CurrentLength == 0) {
 			this._oldTime = DateTime.Now;
 		}
 
 		this.state = 1;
 
 		double ang = RandomAngle(this._rand);
-		int x = IntCeil(Math.Cos(ang) * this.S[this.S_index]);
-		int y = IntCeil(Math.Sin(ang) * this.S[this.S_index]);
+		int x = IntCeil(Math.Cos(ang) * this.CurrentLength);
+		int y = IntCeil(Math.Sin(ang) * this.CurrentLength);
 		this.button1.Location = new Point(x, y);
 
-		this.button1.Size = new Size((int)(1.5f * this.D[this.D_index]), this.D[this.D_index]);
+		this.button1.Size = this.CurrentButtonSize;
 	}
 
 	private void button1_Click (object sender, EventArgs e)
@@ -133,17 +140,17 @@ public partial class FormMain : Form
 		Thread.Sleep(1000);
 
 		this.button1.Show();
-		if (this.S[this.S_index] == 0) {
+		if (this.CurrentLength == 0) {
 			this._oldTime = DateTime.Now;
 		}
 		this.state = 1;
 
 		double ang = RandomAngle(this._rand);
-		int x = IntCeil(Math.Cos(ang) * this.S[this.S_index]);
-		int y = IntCeil(Math.Sin(ang) * this.S[this.S_index]);
+		int x = IntCeil(Math.Cos(ang) * this.CurrentLength);
+		int y = IntCeil(Math.Sin(ang) * this.CurrentLength);
 		this.button1.Location = new Point(x,y);
 
-		this.button1.Size = new Size((int)(1.5f * this.D[this.D_index]), this.D[this.D_index]);
+		this.button1.Size = this.CurrentButtonSize;
 	}
 
 	private Point ScreenCentre
