@@ -17,6 +17,17 @@ public partial class FormMain : Form
 
 	private Size CurrentButtonSize => new(this.CurrentButtonWidth, this.CurrentButtonHeight);
 
+	private Point NewButtonPosition
+	{
+		get
+		{
+			double ang = FormMain.RandomAngle(this._rand);
+			var len = this.CurrentLength;
+			int x = FormMain.IntCeil(Math.Cos(ang) * len);
+			int y = FormMain.IntCeil(Math.Sin(ang) * len);
+			return new(x,y);
+		}
+	}
 
 	//Дистанции до кнопки
 	private readonly int[] S = [0, 20, 40, 60, 100, 150, 200, 250, 300, 350];
@@ -58,10 +69,8 @@ public partial class FormMain : Form
 		this.S_index++;
 		this._oldTime = DateTime.Now;
 
-		double ang = RandomAngle(this._rand);
-		int x = IntCeil(Math.Cos(ang) * this.CurrentLength);
-		int y = IntCeil(Math.Sin(ang) * this.CurrentLength);
-		this.button1.Location = new Point (x,y);
+		
+		this.button1.Location = this.NewButtonPosition;
 		this.button1.Size = this.CurrentButtonSize;
 	}
 
@@ -101,11 +110,8 @@ public partial class FormMain : Form
 
 		this.state = 1;
 
-		double ang = RandomAngle(this._rand);
-		int x = IntCeil(Math.Cos(ang) * this.CurrentLength);
-		int y = IntCeil(Math.Sin(ang) * this.CurrentLength);
-		this.button1.Location = new Point(x, y);
-
+		
+		this.button1.Location = this.NewButtonPosition;
 		this.button1.Size = this.CurrentButtonSize;
 	}
 
@@ -145,11 +151,8 @@ public partial class FormMain : Form
 		}
 		this.state = 1;
 
-		double ang = RandomAngle(this._rand);
-		int x = IntCeil(Math.Cos(ang) * this.CurrentLength);
-		int y = IntCeil(Math.Sin(ang) * this.CurrentLength);
-		this.button1.Location = new Point(x,y);
-
+	
+		this.button1.Location = this.NewButtonPosition;
 		this.button1.Size = this.CurrentButtonSize;
 	}
 
