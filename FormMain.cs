@@ -15,7 +15,7 @@ public partial class FormMain : Form
 	private int CurrentButtonHeight => this.D[this.D_index];
 	private int CurrentButtonWidth => this.CurrentButtonHeight * _widthMult;
 
-	private Size CurrentButtonSize => new(this.CurrentButtonWidth, this.CurrentButtonHeight);
+	private Size NewButtonSize => new(this.CurrentButtonWidth, this.CurrentButtonHeight);
 
 	private Point NewButtonPosition
 	{
@@ -71,7 +71,7 @@ public partial class FormMain : Form
 
 		
 		this.button1.Location = this.NewButtonPosition;
-		this.button1.Size = this.CurrentButtonSize;
+		this.button1.Size = this.NewButtonSize;
 	}
 
 	private void HandleNotFirstClick()
@@ -112,7 +112,7 @@ public partial class FormMain : Form
 
 		
 		this.button1.Location = this.NewButtonPosition;
-		this.button1.Size = this.CurrentButtonSize;
+		this.button1.Size = this.NewButtonSize;
 	}
 
 	private void button1_Click (object sender, EventArgs e)
@@ -153,7 +153,7 @@ public partial class FormMain : Form
 
 	
 		this.button1.Location = this.NewButtonPosition;
-		this.button1.Size = this.CurrentButtonSize;
+		this.button1.Size = this.NewButtonSize;
 	}
 
 	private Point ScreenCentre
