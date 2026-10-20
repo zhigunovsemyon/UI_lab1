@@ -52,8 +52,13 @@ public partial class FormMain : Form
 		if (delta > 0 || this.S_index == 0) {
 			this.state = 2;
 			this._oldTime = DateTime.Now;
-			this.label1.Text = DateTime.Now.Millisecond.ToString();
+			this.ChangeLabel();
 		}
+	}
+
+	private void ChangeLabel()
+	{
+		this.label1.Text = DateTime.Now.Millisecond.ToString();
 	}
 
 	private void HandleFirstClick()
