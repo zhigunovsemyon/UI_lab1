@@ -63,7 +63,7 @@ partial class FormMain
 		Margin = new Padding(2);
 		Name = "FormMain";
 		Text = "Form1";
-		Load += FormMail_Load;
+		Load += FormMain_Load;
 		MouseClick += FormMain_MouseClick;
 		MouseMove += FormMain_MouseMove;
 		ResumeLayout(false);

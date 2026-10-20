@@ -139,7 +139,7 @@ public partial class FormMain : Form
 		}
 	}
 
-	private void FormMail_Load (object sender, EventArgs e)
+	private void FormMain_Load (object sender, EventArgs e)
 	{
 		FileStream stream = File.Open(_filename, FileMode.Create);
 
