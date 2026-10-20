@@ -37,7 +37,7 @@ public partial class FormMain : Form
 	private int CurrentLength => this.S[this.S_index];
 
 	private int tries = 0;
-	private int mode = -1;
+	private bool ProgramFirstLaunched = true;
 	private int state = 0;
 	
 	public FormMain () => this.InitializeComponent();
@@ -63,7 +63,7 @@ public partial class FormMain : Form
 
 	private void HandleFirstClick()
 	{
-		this.mode = 0;
+		this.ProgramFirstLaunched = false;
 		this.state = 0;
 		Cursor.Position = this.ScreenCentreAbsolute;
 		this.button1.Hide();
@@ -132,7 +132,7 @@ public partial class FormMain : Form
 
 	private void button1_Click (object sender, EventArgs e)
 	{
-		if (mode == -1) {
+		if (ProgramFirstLaunched == true) {
 			this.HandleFirstClick();
 		} else {
 			this.HandleNotFirstClick();
