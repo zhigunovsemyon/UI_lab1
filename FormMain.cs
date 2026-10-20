@@ -1,5 +1,9 @@
 ﻿namespace UI_lab1;
 
+/*
+
+*/
+
 public partial class FormMain : Form
 {
 	private const string _filename = "times.txt";
@@ -74,14 +78,22 @@ public partial class FormMain : Form
 		this.button1.Size = this.NewButtonSize;
 	}
 
+	private void WriteInFile()
+	{
+		var curLen = this.CurrentLength;
+		var btnHeight = this.CurrentButtonHeight;
+		var time = (DateTime.Now - _oldTime).TotalMilliseconds;
+
+		using var stream = File.Open(_filename, FileMode.Append);
+		using var writer = new StreamWriter(stream);
+
+		writer.WriteLine($"{curLen} {btnHeight} {time}");
+		writer.Flush();
+	}
+
 	private void HandleNotFirstClick()
 	{
-		var stream = File.Open(_filename, FileMode.Append);
-		var writer = new StreamWriter(stream);
-		writer.WriteLine($"{this.CurrentLength} {this.CurrentButtonHeight} {(DateTime.Now - _oldTime).TotalMilliseconds}");
-		writer.Flush();
-		writer.Close();
-		stream.Close();
+		this.WriteInFile();
 
 		this.tries++;
 		Cursor.Position = this.ScreenCentre;
