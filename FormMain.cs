@@ -61,7 +61,7 @@ public partial class FormMain : Form
 		this.label1.Text = DateTime.Now.Millisecond.ToString();
 	}
 
-	private void HandleFirstClick()
+	private void SetupBenching()
 	{
 		this.ProgramFirstLaunched = false;
 		this.state = 0;
@@ -94,7 +94,7 @@ public partial class FormMain : Form
 		writer.Flush();
 	}
 
-	private void HandleNotFirstClick()
+	private void UserHitButton()
 	{
 		this.WriteInFile();
 
@@ -133,9 +133,9 @@ public partial class FormMain : Form
 	private void button1_Click (object sender, EventArgs e)
 	{
 		if (ProgramFirstLaunched == true) {
-			this.HandleFirstClick();
+			this.SetupBenching();
 		} else {
-			this.HandleNotFirstClick();
+			this.UserHitButton();
 		}
 	}
 
@@ -149,12 +149,16 @@ public partial class FormMain : Form
 		this.button1.BackColor = Color.Gray;
 	}
 
-	private void FormMain_MouseClick (object sender, MouseEventArgs e)
+	private void FormMain_MouseClick(object sender, MouseEventArgs e)
 	{
 		if (this.state != 2) {
 			return;
 		}
+		this.UserMissedButton();
+	}
 
+	private void UserMissedButton()
+	{
 		this.state = 0;
 		Cursor.Position = this.ScreenCentreAbsolute;
 		this.button1.Hide();
