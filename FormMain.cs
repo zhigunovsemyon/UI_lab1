@@ -26,10 +26,8 @@ public partial class FormMain : Form
 			int x = FormMain.IntCeil(Math.Cos(ang) * len);
 			int y = FormMain.IntCeil(Math.Sin(ang) * len);
 
-			var relX = this.Width / 2;
-			var relY = this.Height/ 2;
-
-			return new Point (x + relX, y + relY);
+			var centre = this.ScreenCentreRelative;
+			return new Point (x + centre.X, y + centre.Y);
 		}
 	}
 
@@ -62,7 +60,7 @@ public partial class FormMain : Form
 	{
 		this.mode = 0;
 		this.state = 0;
-		Cursor.Position = this.ScreenCentre;
+		Cursor.Position = this.ScreenCentreAbsolute;
 		this.button1.Hide();
 
 		Thread.Sleep(1000);
@@ -96,7 +94,7 @@ public partial class FormMain : Form
 		this.WriteInFile();
 
 		this.tries++;
-		Cursor.Position = this.ScreenCentre;
+		Cursor.Position = this.ScreenCentreAbsolute;
 
 		if (this.tries == 5) {
 			this.S_index++;
@@ -153,7 +151,7 @@ public partial class FormMain : Form
 		}
 
 		this.state = 0;
-		Cursor.Position = this.ScreenCentre;
+		Cursor.Position = this.ScreenCentreAbsolute;
 		this.button1.Hide();
 		Thread.Sleep(1000);
 
@@ -168,12 +166,23 @@ public partial class FormMain : Form
 		this.button1.Size = this.NewButtonSize;
 	}
 
-	private Point ScreenCentre
+	private Point ScreenCentreRelative
 	{
 		get
 		{
-			var x = this.Bounds.X + this.Bounds.Width / 2;
-			var y = this.Bounds.Y + this.Bounds.Height / 2;
+			var x = this.Bounds.Width / 2;
+			var y = this.Bounds.Height / 2;
+			return new Point (x, y);
+		}
+	}
+
+	private Point ScreenCentreAbsolute
+	{
+		get
+		{
+			var centre = this.ScreenCentreRelative;
+			var x = this.Bounds.X + centre.X;
+			var y = this.Bounds.Y + centre.Y;
 			return new Point(x, y);
 		}
 	}
