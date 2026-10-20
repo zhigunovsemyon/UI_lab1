@@ -1,9 +1,5 @@
 ﻿namespace UI_lab1;
 
-/*
-
-*/
-
 public partial class FormMain : Form
 {
 	private const string _filename = "times.txt";
@@ -29,7 +25,11 @@ public partial class FormMain : Form
 			var len = this.CurrentLength;
 			int x = FormMain.IntCeil(Math.Cos(ang) * len);
 			int y = FormMain.IntCeil(Math.Sin(ang) * len);
-			return new(x,y);
+
+			var relX = this.Width / 2;
+			var relY = this.Height/ 2;
+
+			return new Point (x + relX, y + relY);
 		}
 	}
 
