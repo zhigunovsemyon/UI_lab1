@@ -89,20 +89,9 @@ public partial class FormMain : Form
 	private void SetupBenching()
 	{
 		this.ProgramFirstLaunched = false;
-		this.state = 0;
-		this.CenterCursor();
-		HideObject();
-
-		Thread.Sleep(1000);
-
-		this._oldTime = DateTime.Now;
-		ShowObject();
-		this.state = 1;
 		this.S_index++;
-		this._oldTime = DateTime.Now; // лишний (?)
 
-
-		SetObject();
+		HideAndShowObject();
 	}
 
 	private void WriteInFile()
@@ -118,14 +107,15 @@ public partial class FormMain : Form
 		writer.Flush();
 	}
 
-	private void UserMissedButton ()
+	private void UserMissedButton () => HideAndShowObject();
+
+	private void HideAndShowObject ()
 	{
 		this.state = 0;
 		this.CenterCursor();
-		HideObject();
+		this.button1.Hide();
 		Thread.Sleep(1000);
 
-		ShowObject();
 		if (this.CurrentDistance == 0) {
 			this._oldTime = DateTime.Now;
 		}
@@ -133,6 +123,7 @@ public partial class FormMain : Form
 
 
 		SetObject();
+		this.button1.Show();
 	}
 
 	private void UserHitButton()
@@ -140,7 +131,6 @@ public partial class FormMain : Form
 		this.WriteInFile();
 
 		this.tries++;
-		this.CenterCursor();
 
 		if (this.tries == 5) {
 			this.S_index++;
@@ -154,20 +144,8 @@ public partial class FormMain : Form
 			}
 			this.tries = 0;
 		}
-		this.state = 0;
-		HideObject();
 
-		Thread.Sleep(1000);
-
-		ShowObject();
-
-		if (this.CurrentDistance == 0) {
-			this._oldTime = DateTime.Now;
-		}
-
-		this.state = 1;
-
-		SetObject();
+		HideAndShowObject();
 	}
 
 	
@@ -230,10 +208,6 @@ public partial class FormMain : Form
 		var y = this.Bounds.Y + centre.Y;
 		Cursor.Position = new Point(x, y);
 	}
-
-	private void HideObject () => this.button1.Hide();
-
-	private void ShowObject () => this.button1.Show();
 
 	private void ChangeLabel () => this.label1.Text = DateTime.Now.Millisecond.ToString();
 
