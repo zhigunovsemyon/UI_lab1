@@ -85,16 +85,12 @@ public partial class FormMain : Form
 		}
 	}
 
-	private void ChangeLabel()
-	{
-		this.label1.Text = DateTime.Now.Millisecond.ToString();
-	}
 
 	private void SetupBenching()
 	{
 		this.ProgramFirstLaunched = false;
 		this.state = 0;
-		Cursor.Position = this.ScreenCentreAbsolute;
+		this.CenterCursor();
 		HideObject();
 
 		Thread.Sleep(1000);
@@ -125,7 +121,7 @@ public partial class FormMain : Form
 	private void UserMissedButton ()
 	{
 		this.state = 0;
-		Cursor.Position = this.ScreenCentreAbsolute;
+		this.CenterCursor();
 		HideObject();
 		Thread.Sleep(1000);
 
@@ -144,7 +140,7 @@ public partial class FormMain : Form
 		this.WriteInFile();
 
 		this.tries++;
-		Cursor.Position = this.ScreenCentreAbsolute;
+		this.CenterCursor();
 
 		if (this.tries == 5) {
 			this.S_index++;
@@ -174,13 +170,13 @@ public partial class FormMain : Form
 		SetObject();
 	}
 
-	private void button1_Click (object sender, EventArgs e) => HandleClick();
 	
 	private void HandleClick ()
 	{
 		if (ProgramFirstLaunched == true) {
 			this.SetupBenching();
-		} else {
+		} 
+		else {
 			this.UserHitButton();
 		}
 	}
@@ -194,8 +190,8 @@ public partial class FormMain : Form
 		var len = this.CurrentLength;
 
 		var centre = this.ScreenCentreRelative;
-		int x = FormMain.IntCeil(Math.Cos(ang) * len) + centre.X;
-		int y = FormMain.IntCeil(Math.Sin(ang) * len) + centre.Y;
+		int x = (int)Math.Ceiling(Math.Cos(ang) * len) + centre.X;
+		int y = (int)Math.Ceiling(Math.Sin(ang) * len) + centre.Y;
 
 		this.button1.Location = new Point (x, y);
 	}
@@ -227,22 +223,21 @@ public partial class FormMain : Form
 		}
 	}
 
-	private Point ScreenCentreAbsolute
+	private void CenterCursor ()
 	{
-		get
-		{
-			var centre = this.ScreenCentreRelative;
-			var x = this.Bounds.X + centre.X;
-			var y = this.Bounds.Y + centre.Y;
-			return new Point(x, y);
-		}
+		var centre = this.ScreenCentreRelative;
+		var x = this.Bounds.X + centre.X;
+		var y = this.Bounds.Y + centre.Y;
+		Cursor.Position = new Point(x, y);
 	}
 
-	private void HideObject() => this.button1.Hide();
+	private void HideObject () => this.button1.Hide();
 
-	private void ShowObject() => this.button1.Show();
+	private void ShowObject () => this.button1.Show();
+
+	private void ChangeLabel () => this.label1.Text = DateTime.Now.Millisecond.ToString();
 
 	private void FormMain_MouseMove (object sender, MouseEventArgs e) => this.HandleMouseMove();
 
-	private static int IntCeil(double x) => (int)Math.Ceiling(x);
+	private void button1_Click (object sender, EventArgs e) => HandleClick();
 }
