@@ -85,15 +85,6 @@ public partial class FormMain : Form
 		}
 	}
 
-
-	private void SetupBenching()
-	{
-		this.ProgramFirstLaunched = false;
-		this.S_index++;
-
-		HideAndShowObject();
-	}
-
 	private void WriteInFile()
 	{
 		var distance = this.CurrentDistance;
@@ -125,38 +116,35 @@ public partial class FormMain : Form
 		SetObject();
 		this.button1.Show();
 	}
-
-	private void UserHitButton()
-	{
-		this.WriteInFile();
-
-		this.tries++;
-
-		if (this.tries == 5) {
-			this.S_index++;
-			if (this.S_index >= this.S.Length) {
-				this.S_index = 0;
-				this.D_index++;
-			}
-			if (this.D_index >= this.D.Length) {
-				Application.Exit();
-				return;
-			}
-			this.tries = 0;
-		}
-
-		HideAndShowObject();
-	}
-
 	
 	private void HandleClick ()
 	{
 		if (ProgramFirstLaunched == true) {
-			this.SetupBenching();
+			this.ProgramFirstLaunched = false;
+			this.S_index = 0;
 		} 
 		else {
-			this.UserHitButton();
+			this.WriteInFile();
+			this.tries++;
 		}
+
+		if (this.tries < 5) {
+			HideAndShowObject();
+			return;
+		}
+
+		this.S_index++;
+		if (this.S_index >= this.S.Length) {
+			this.S_index = 0;
+			this.D_index++;
+		}
+		if (this.D_index >= this.D.Length) {
+			Application.Exit();
+			return;
+		}
+		this.tries = 0;
+
+		HideAndShowObject();
 	}
 
 	private void SetObject ()
@@ -167,7 +155,7 @@ public partial class FormMain : Form
 		double ang = _rand.NextDouble() * _angleRange;
 		var distance = this.CurrentDistance;
 
-		var centre = this.ScreenCentreRelative;
+		var centre = this.WindowCentre;
 		int x = (int)Math.Ceiling(Math.Cos(ang) * distance) + centre.X;
 		int y = (int)Math.Ceiling(Math.Sin(ang) * distance) + centre.Y;
 
@@ -191,7 +179,7 @@ public partial class FormMain : Form
 		}
 	}
 
-	private Point ScreenCentreRelative
+	private Point WindowCentre
 	{
 		get
 		{
@@ -203,7 +191,7 @@ public partial class FormMain : Form
 
 	private void CenterCursor ()
 	{
-		var centre = this.ScreenCentreRelative;
+		var centre = this.WindowCentre;
 		var x = this.Bounds.X + centre.X;
 		var y = this.Bounds.Y + centre.Y;
 		Cursor.Position = new Point(x, y);
