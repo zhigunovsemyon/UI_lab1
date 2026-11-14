@@ -63,7 +63,7 @@ public partial class FormMain : Form
 	//Дистанции до кнопки
 	private readonly int[] S = [0, 20, 40, 60, 100, 150, 200, 250, 300, 350];
 	private int S_index = -1;
-	private int CurrentLength => this.S[this.S_index];
+	private int CurrentDistance => this.S[this.S_index];
 
 	private int tries = 0;
 	private bool ProgramFirstLaunched = true;
@@ -107,14 +107,14 @@ public partial class FormMain : Form
 
 	private void WriteInFile()
 	{
-		var curLen = this.CurrentLength;
+		var distance = this.CurrentDistance;
 		var btnHeight = this.CurrentButtonHeight;
 		var time = (DateTime.Now - _oldTime).TotalMilliseconds;
 
 		using var stream = File.Open(_filename, FileMode.Append);
 		using var writer = new StreamWriter(stream);
 
-		writer.WriteLine($"{curLen} {btnHeight} {time}");
+		writer.WriteLine($"{distance} {btnHeight} {time}");
 		writer.Flush();
 	}
 
@@ -126,7 +126,7 @@ public partial class FormMain : Form
 		Thread.Sleep(1000);
 
 		ShowObject();
-		if (this.CurrentLength == 0) {
+		if (this.CurrentDistance == 0) {
 			this._oldTime = DateTime.Now;
 		}
 		this.state = 1;
@@ -161,7 +161,7 @@ public partial class FormMain : Form
 
 		ShowObject();
 
-		if (this.CurrentLength == 0) {
+		if (this.CurrentDistance == 0) {
 			this._oldTime = DateTime.Now;
 		}
 
@@ -187,11 +187,11 @@ public partial class FormMain : Form
 		this.button1.Size = new Size (currentButtonWidth, this.CurrentButtonHeight);
 
 		double ang = _rand.NextDouble() * _angleRange;
-		var len = this.CurrentLength;
+		var distance = this.CurrentDistance;
 
 		var centre = this.ScreenCentreRelative;
-		int x = (int)Math.Ceiling(Math.Cos(ang) * len) + centre.X;
-		int y = (int)Math.Ceiling(Math.Sin(ang) * len) + centre.Y;
+		int x = (int)Math.Ceiling(Math.Cos(ang) * distance) + centre.X;
+		int y = (int)Math.Ceiling(Math.Sin(ang) * distance) + centre.Y;
 
 		this.button1.Location = new Point (x, y);
 	}
