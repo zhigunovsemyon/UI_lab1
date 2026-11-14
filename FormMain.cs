@@ -59,23 +59,6 @@ public partial class FormMain : Form
 	private readonly int[] D = [7];
 	private int D_index = 0;
 	private int CurrentButtonHeight => this.D[this.D_index];
-	private int CurrentButtonWidth => this.CurrentButtonHeight * _widthMult;
-
-	private Size NewButtonSize => new(this.CurrentButtonWidth, this.CurrentButtonHeight);
-
-	private Point NewButtonPosition
-	{
-		get
-		{
-			double ang = FormMain.RandomAngle(this._rand);
-			var len = this.CurrentLength;
-			int x = FormMain.IntCeil(Math.Cos(ang) * len);
-			int y = FormMain.IntCeil(Math.Sin(ang) * len);
-
-			var centre = this.ScreenCentreRelative;
-			return new Point (x + centre.X, y + centre.Y);
-		}
-	}
 
 	//Дистанции до кнопки
 	private readonly int[] S = [0, 20, 40, 60, 100, 150, 200, 250, 300, 350];
@@ -112,19 +95,18 @@ public partial class FormMain : Form
 		this.ProgramFirstLaunched = false;
 		this.state = 0;
 		Cursor.Position = this.ScreenCentreAbsolute;
-		this.button1.Hide();
+		HideObject();
 
 		Thread.Sleep(1000);
 
 		this._oldTime = DateTime.Now;
-		this.button1.Show();
+		ShowObject();
 		this.state = 1;
 		this.S_index++;
-		this._oldTime = DateTime.Now;
+		this._oldTime = DateTime.Now; // лишний (?)
 
-		
-		this.button1.Location = this.NewButtonPosition;
-		this.button1.Size = this.NewButtonSize;
+
+		SetObject();
 	}
 
 	private void WriteInFile()
@@ -138,6 +120,23 @@ public partial class FormMain : Form
 
 		writer.WriteLine($"{curLen} {btnHeight} {time}");
 		writer.Flush();
+	}
+
+	private void UserMissedButton ()
+	{
+		this.state = 0;
+		Cursor.Position = this.ScreenCentreAbsolute;
+		HideObject();
+		Thread.Sleep(1000);
+
+		ShowObject();
+		if (this.CurrentLength == 0) {
+			this._oldTime = DateTime.Now;
+		}
+		this.state = 1;
+
+
+		SetObject();
 	}
 
 	private void UserHitButton()
@@ -160,29 +159,45 @@ public partial class FormMain : Form
 			this.tries = 0;
 		}
 		this.state = 0;
-		this.button1.Hide();
+		HideObject();
 
 		Thread.Sleep(1000);
-		
-		this.button1.Show();
+
+		ShowObject();
+
 		if (this.CurrentLength == 0) {
 			this._oldTime = DateTime.Now;
 		}
 
 		this.state = 1;
 
-		
-		this.button1.Location = this.NewButtonPosition;
-		this.button1.Size = this.NewButtonSize;
+		SetObject();
 	}
 
-	private void button1_Click (object sender, EventArgs e)
+	private void button1_Click (object sender, EventArgs e) => HandleClick();
+	
+	private void HandleClick ()
 	{
 		if (ProgramFirstLaunched == true) {
 			this.SetupBenching();
 		} else {
 			this.UserHitButton();
 		}
+	}
+
+	private void SetObject ()
+	{
+		int currentButtonWidth = this.CurrentButtonHeight * _widthMult;
+		this.button1.Size = new Size (currentButtonWidth, this.CurrentButtonHeight);
+
+		double ang = _rand.NextDouble() * _angleRange;
+		var len = this.CurrentLength;
+
+		var centre = this.ScreenCentreRelative;
+		int x = FormMain.IntCeil(Math.Cos(ang) * len) + centre.X;
+		int y = FormMain.IntCeil(Math.Sin(ang) * len) + centre.Y;
+
+		this.button1.Location = new Point (x, y);
 	}
 
 	private void FormMain_Load (object sender, EventArgs e)
@@ -200,24 +215,6 @@ public partial class FormMain : Form
 		if (this.state == 2) {
 			this.UserMissedButton();
 		}
-	}
-
-	private void UserMissedButton()
-	{
-		this.state = 0;
-		Cursor.Position = this.ScreenCentreAbsolute;
-		this.button1.Hide();
-		Thread.Sleep(1000);
-
-		this.button1.Show();
-		if (this.CurrentLength == 0) {
-			this._oldTime = DateTime.Now;
-		}
-		this.state = 1;
-
-	
-		this.button1.Location = this.NewButtonPosition;
-		this.button1.Size = this.NewButtonSize;
 	}
 
 	private Point ScreenCentreRelative
@@ -241,9 +238,11 @@ public partial class FormMain : Form
 		}
 	}
 
+	private void HideObject() => this.button1.Hide();
+
+	private void ShowObject() => this.button1.Show();
+
 	private void FormMain_MouseMove (object sender, MouseEventArgs e) => this.HandleMouseMove();
 
 	private static int IntCeil(double x) => (int)Math.Ceiling(x);
-
-	private static double RandomAngle(Random rnd) => (rnd.NextDouble() * _angleRange);
 }
