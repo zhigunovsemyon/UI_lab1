@@ -68,7 +68,7 @@ public partial class FormMain : Form
 	private int tries = 0;
 	private bool ProgramFirstLaunched = true;
 	private int state = 0;
-	
+
 	public FormMain () => this.InitializeComponent();
 
 	private void HandleMouseMove ()
@@ -104,7 +104,7 @@ public partial class FormMain : Form
 	{
 		this.state = 0;
 		this.CenterCursor();
-		this.button1.Hide();
+		this.panel.Hide();
 		Thread.Sleep(1000);
 
 		if (this.CurrentDistance == 0) {
@@ -114,9 +114,9 @@ public partial class FormMain : Form
 
 
 		SetObject();
-		this.button1.Show();
+		this.panel.Show();
 	}
-	
+
 	private void HandleClick ()
 	{
 		if (ProgramFirstLaunched == true) {
@@ -150,7 +150,7 @@ public partial class FormMain : Form
 	private void SetObject ()
 	{
 		int currentButtonWidth = this.CurrentButtonHeight * _widthMult;
-		this.button1.Size = new Size (currentButtonWidth, this.CurrentButtonHeight);
+		this.panel.Size = new Size(currentButtonWidth, this.CurrentButtonHeight);
 
 		double ang = _rand.NextDouble() * _angleRange;
 		var distance = this.CurrentDistance;
@@ -159,7 +159,7 @@ public partial class FormMain : Form
 		int x = (int)Math.Ceiling(Math.Cos(ang) * distance) + centre.X;
 		int y = (int)Math.Ceiling(Math.Sin(ang) * distance) + centre.Y;
 
-		this.button1.Location = new Point (x, y);
+		this.panel.Location = new Point(x, y);
 	}
 
 	private void FormMain_Load (object sender, EventArgs e)
@@ -182,7 +182,7 @@ public partial class FormMain : Form
 		{
 			var x = this.Bounds.Width / 2;
 			var y = this.Bounds.Height / 2;
-			return new Point (x, y);
+			return new Point(x, y);
 		}
 	}
 
@@ -198,5 +198,5 @@ public partial class FormMain : Form
 
 	private void FormMain_MouseMove (object sender, MouseEventArgs e) => this.HandleMouseMove();
 
-	private void button1_Click (object sender, EventArgs e) => HandleClick();
+	private void panel1_MouseClick (object sender, MouseEventArgs e) => this.HandleClick();
 }

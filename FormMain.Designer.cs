@@ -27,20 +27,9 @@ partial class FormMain
 	/// </summary>
 	private void InitializeComponent ()
 	{
-		this.button1 = new Button();
 		this.label1 = new Label();
+		this.panel = new Panel();
 		this.SuspendLayout();
-		// 
-		// button1
-		// 
-		this.button1.Location = new Point(11, 11);
-		this.button1.Margin = new Padding(2);
-		this.button1.Name = "button1";
-		this.button1.Size = new Size(61, 28);
-		this.button1.TabIndex = 0;
-		this.button1.Text = "button1";
-		this.button1.UseVisualStyleBackColor = true;
-		this.button1.Click += this.button1_Click;
 		// 
 		// label1
 		// 
@@ -52,13 +41,23 @@ partial class FormMain
 		this.label1.TabIndex = 1;
 		this.label1.Text = "label1";
 		// 
+		// panel
+		// 
+		this.panel.BackColor = Color.White;
+		this.panel.Location = new Point(358, 389);
+		this.panel.Name = "panel";
+		this.panel.Size = new Size(193, 174);
+		this.panel.TabIndex = 2;
+		this.panel.MouseClick += this.panel1_MouseClick;
+		// 
 		// FormMain
 		// 
 		this.AutoScaleDimensions = new SizeF(7F, 15F);
 		this.AutoScaleMode = AutoScaleMode.Font;
+		this.BackColor = Color.Gray;
 		this.ClientSize = new Size(859, 825);
+		this.Controls.Add(this.panel);
 		this.Controls.Add(this.label1);
-		this.Controls.Add(this.button1);
 		this.FormBorderStyle = FormBorderStyle.None;
 		this.Margin = new Padding(2);
 		this.Name = "FormMain";
@@ -72,8 +71,7 @@ partial class FormMain
 	}
 
 	#endregion
-
-	private System.Windows.Forms.Button button1;
 	private System.Windows.Forms.Label label1;
+	private Panel panel;
 }
 
