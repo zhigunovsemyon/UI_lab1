@@ -85,7 +85,7 @@ public partial class FormMain : Form
 		}
 	}
 
-	private void WriteInFile()
+	private void WriteIntoFile ()
 	{
 		var distance = this.CurrentDistance;
 		var btnHeight = this.CurrentButtonHeight;
@@ -124,7 +124,7 @@ public partial class FormMain : Form
 			this.S_index = 0;
 		} 
 		else {
-			this.WriteInFile();
+			this.WriteIntoFile();
 			this.tries++;
 		}
 
@@ -172,7 +172,7 @@ public partial class FormMain : Form
 		this.button1.BackColor = Color.Gray;
 	}
 
-	private void FormMain_MouseClick(object sender, MouseEventArgs e)
+	private void FormMain_MouseClick (object sender, MouseEventArgs e)
 	{
 		if (this.state == 2) {
 			this.UserMissedButton();
