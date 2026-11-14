@@ -50,7 +50,7 @@ public partial class FormMain : Form
 {
 	private const string _filename = "times.txt";
 	private const double _angleRange = Math.PI / 2;
-	private const int _widthMult = 3;
+	private const int _widthMult = 4;
 
 	private readonly Random _rand = new();
 	private DateTime _oldTime;
