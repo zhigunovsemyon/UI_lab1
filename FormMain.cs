@@ -164,12 +164,9 @@ public partial class FormMain : Form
 
 	private void FormMain_Load (object sender, EventArgs e)
 	{
-		FileStream stream = File.Open(_filename, FileMode.Create);
+		using FileStream stream = File.Open(_filename, FileMode.Create);
 
 		stream.Close();
-
-		this.BackColor = Color.Gray;
-		this.button1.BackColor = Color.Gray;
 	}
 
 	private void FormMain_MouseClick (object sender, MouseEventArgs e)
