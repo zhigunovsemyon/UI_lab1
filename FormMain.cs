@@ -48,7 +48,7 @@
 
 public partial class FormMain : Form
 {
-	private const string _filename = "times.txt";
+	private const string _filename = "times.csv";
 	private const double _angleRange = Math.PI / 2;
 	private const int _widthMult = 4;
 
@@ -90,12 +90,12 @@ public partial class FormMain : Form
 	{
 		var distance = this.CurrentDistance;
 		var btnHeight = this.CurrentButtonHeight;
-		var time = (DateTime.Now - _oldTime).TotalMilliseconds;
+		var time = (int)Math.Round((DateTime.Now - _oldTime).TotalMilliseconds);
 
 		using var stream = File.Open(_filename, FileMode.Append);
 		using var writer = new StreamWriter(stream);
 
-		writer.WriteLine($"{distance} {btnHeight} {time}");
+		writer.WriteLine($"{distance},{btnHeight},{time}");
 		writer.Flush();
 	}
 
@@ -165,9 +165,10 @@ public partial class FormMain : Form
 
 	private void FormMain_Load (object sender, EventArgs e)
 	{
-		using FileStream stream = File.Open(_filename, FileMode.Create);
+		using var writer = new StreamWriter(File.Open(_filename, FileMode.Create));
+		writer.WriteLine("S,D,t");
 
-		stream.Close();
+		writer.Close();
 	}
 
 	private void FormMain_MouseClick (object sender, MouseEventArgs e)
