@@ -67,19 +67,20 @@ public partial class FormMain : Form
 
 	private int tries = 0;
 	private bool ProgramFirstLaunched = true;
-	private int state = 0;
+	private State state = State.Inactive;
 
 	public FormMain () => this.InitializeComponent();
 
 	private void HandleMouseMove ()
 	{
-		if (this.state != 1) {
+		if (this.state is not State.WaitingPress) {
 			return;
 		}
 
 		var delta = Cursor.Position.X - Bounds.Location.X;
+		// если курсор не в углу или если кнопка в углу
 		if (delta > 0 || this.S_index == 0) {
-			this.state = 2;
+			this.state = State.UserMovingMouse;
 			this._oldTime = DateTime.Now;
 			this.ChangeLabel();
 		}
@@ -102,7 +103,7 @@ public partial class FormMain : Form
 
 	private void HideAndShowObject ()
 	{
-		this.state = 0;
+		this.state = State.Inactive;
 		this.CenterCursor();
 		this.panel.Hide();
 		Thread.Sleep(1000);
@@ -110,7 +111,7 @@ public partial class FormMain : Form
 		if (this.CurrentDistance == 0) {
 			this._oldTime = DateTime.Now;
 		}
-		this.state = 1;
+		this.state = State.WaitingPress;
 
 
 		SetObject();
@@ -171,7 +172,7 @@ public partial class FormMain : Form
 
 	private void FormMain_MouseClick (object sender, MouseEventArgs e)
 	{
-		if (this.state == 2) {
+		if (this.state is State.UserMovingMouse) {
 			this.UserMissedButton();
 		}
 	}
@@ -200,3 +201,11 @@ public partial class FormMain : Form
 
 	private void panel1_MouseClick (object sender, MouseEventArgs e) => this.HandleClick();
 }
+
+// state0 -- начальное состояние
+// state0 выставляется при сокрытии кнопки
+
+// state1 -- выставляется с показом кнопки -- началом тестирования,
+// при state1 обрабатывается движение курсора
+
+// state2 -- если пользователь нажал по форме в state2 => промахнулся мимо кнопки 
