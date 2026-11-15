@@ -77,13 +77,9 @@ public partial class FormMain : Form
 			return;
 		}
 
-		var delta = Cursor.Position.X - Bounds.Location.X;
-		// если курсор не в углу или если кнопка в углу
-		if (delta > 0 || this.S_index == 0) {
-			this.state = State.UserMovingMouse;
-			this._oldTime = DateTime.Now;
-			this.ChangeLabel();
-		}
+		this.state = State.UserMovingMouse;
+		this._oldTime = DateTime.Now;
+		this.ChangeLabel();
 	}
 
 	private void WriteIntoFile ()
@@ -108,6 +104,8 @@ public partial class FormMain : Form
 		this.panel.Hide();
 		Thread.Sleep(1000);
 
+		// Замена сброса счётчика при нулевом расстоянии, т.к. можно нажать, не двигая курсор
+		// (тогда таймер будет отсчитывать от начала времён)
 		if (this.CurrentDistance == 0) {
 			this._oldTime = DateTime.Now;
 		}
@@ -173,7 +171,7 @@ public partial class FormMain : Form
 
 	private void FormMain_MouseClick (object sender, MouseEventArgs e)
 	{
-		if (this.state is State.UserMovingMouse) {
+		if (this.state is not State.Inactive) {
 			this.UserMissedButton();
 		}
 	}
