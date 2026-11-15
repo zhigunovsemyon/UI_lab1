@@ -27,19 +27,8 @@ partial class FormMain
 	/// </summary>
 	private void InitializeComponent ()
 	{
-		this.label1 = new Label();
 		this.panel = new Panel();
 		this.SuspendLayout();
-		// 
-		// label1
-		// 
-		this.label1.AutoSize = true;
-		this.label1.Location = new Point(201, 140);
-		this.label1.Margin = new Padding(2, 0, 2, 0);
-		this.label1.Name = "label1";
-		this.label1.Size = new Size(38, 15);
-		this.label1.TabIndex = 1;
-		this.label1.Text = "label1";
 		// 
 		// panel
 		// 
@@ -57,7 +46,6 @@ partial class FormMain
 		this.BackColor = Color.Gray;
 		this.ClientSize = new Size(859, 825);
 		this.Controls.Add(this.panel);
-		this.Controls.Add(this.label1);
 		this.FormBorderStyle = FormBorderStyle.None;
 		this.Margin = new Padding(2);
 		this.Name = "FormMain";
@@ -66,12 +54,10 @@ partial class FormMain
 		this.MouseClick += this.FormMain_MouseClick;
 		this.MouseMove += this.FormMain_MouseMove;
 		this.ResumeLayout(false);
-		this.PerformLayout();
 
 	}
 
 	#endregion
-	private System.Windows.Forms.Label label1;
 	private Panel panel;
 }
 

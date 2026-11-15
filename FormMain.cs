@@ -79,7 +79,6 @@ public partial class FormMain : Form
 
 		this.state = State.UserMovingMouse;
 		this._oldTime = DateTime.Now;
-		this.ChangeLabel();
 	}
 
 	private void WriteIntoFile ()
@@ -193,8 +192,6 @@ public partial class FormMain : Form
 		var y = this.Bounds.Y + centre.Y;
 		Cursor.Position = new Point(x, y);
 	}
-
-	private void ChangeLabel () => this.label1.Text = DateTime.Now.Millisecond.ToString();
 
 	private void FormMain_MouseMove (object sender, MouseEventArgs e) => this.HandleMouseMove();
 
